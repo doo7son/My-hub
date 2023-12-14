@@ -1,0 +1,89 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct node{
+  int data;
+  struct node *next;
+
+}node;
+
+
+node* createnode(int data)
+{
+  node* NewNode = (node*)malloc(sizeof(node));
+  if(NewNode == NULL)
+  {
+    printf("새 노드 할당에 실패했습니다.\n");
+    exit(0);
+    
+  }
+  NewNode->data=data;
+  NewNode->next=NULL;
+  return NewNode;
+  
+}
+
+void app(node **head, int data)
+{
+  node* newNode = createnode(data);
+  if(*head == NULL)
+  {
+    *head = newNode;
+    return;
+  }
+
+  node* current = *head;
+  while ( current -> next !=NULL)
+    {
+      current= current ->next;
+      
+    }
+  current->next = newNode;
+  
+}
+
+
+
+void printList(node *head)
+{
+  node* current =head;
+  while (current!=NULL)
+    {
+      printf("%d", current->data);
+      current=current->next;
+    }
+  printf("\n");
+}
+
+void freeList(node* head)
+{
+  node * temp;
+  while(head != NULL)
+    {
+      temp = head;
+      head = head->next;
+      free(temp);
+      
+    }
+}
+
+int main(void) {
+  
+
+  node*head = NULL;
+  app(&head, 10);
+  app(&head, 20);
+  app(&head, 30);
+
+  printf("연결리스트\n");
+
+  printList(head);
+  
+  freeList(head);
+  
+  return 0;
+}
+
+
+
+
