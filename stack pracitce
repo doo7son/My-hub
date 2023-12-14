@@ -1,0 +1,102 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct N
+{
+  int data;
+  struct N *link;
+
+}N;
+
+
+N* insert_first(N *head, int value)
+{
+  N *p=(N*)malloc(sizeof(N));
+  p->data=value;
+  p->link=head;
+  head=p;
+  return head;
+  
+    
+}
+N *insert(N *head, N *pre,int value)
+{
+  N *p=(N*)malloc(sizeof(N));
+  p->data=value;
+  p->link=pre->link;
+  pre->link=p;
+  return head;
+}
+
+void print_list(N *head)
+{
+  for(N *p = head; p!=NULL; p=p->link)
+    {
+      printf("%d -> ", p->data);
+      if(head->link==NULL)
+        printf("NULL \n");
+    }
+}
+
+
+N *del(N* head, N*pre)
+{
+  N *removed;
+  removed=pre->link;
+  pre->link=removed->link;
+  free(removed);
+  return head;
+  
+}
+
+N* dele(N* head, int pdata)
+{
+    N* current = head;
+    N* prev = NULL;
+
+    while (current != NULL)
+    {
+        if (current->data == pdata)
+        {
+            if (prev != NULL)
+            {
+                prev->link = current->link;
+            }
+            else
+            {
+                head = current->link; 
+            }
+
+            free(current);
+            return head;
+        }
+
+        prev = current;
+        current = current->link;
+    }
+
+    return head; 
+}
+
+int main(void)
+{
+  N *head =NULL;
+  head = insert_first(head, 10);
+  head = insert_first(head, 20);
+  head = insert_first(head, 30);
+  
+  print_list(head);
+  
+  head = insert(head, head->link , 50);
+  
+  printf("\n");
+  print_list(head);
+  head = dele(head, 20);
+
+  printf("\n");
+  print_list(head);
+  
+}
+
+
+
