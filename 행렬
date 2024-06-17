@@ -1,0 +1,48 @@
+#include <stdio.h>
+
+
+
+void  print(int A[][3])
+{
+  for(int i=0; i<3; i++)
+  {
+    for(int j=0; j<3; j++)
+    {
+
+      printf("%d ", A[i][j]);
+
+    }
+    printf("\n");
+  }
+
+}
+
+
+int main(void) {
+
+  int a[3][3]={{1,2},{3,4},{5,6}};
+  int b[3][3]={{3,5},{6,7},{8,9}};
+  int c[3][3]={};
+
+  print(c);
+
+  int A[14]={1,4,5,6,8,9,12,13,15,16,17,18,19,20};
+  int n=0;
+  int p=0;
+  printf("검색할 수를 입력 : ");
+  scanf("%d", &n);
+
+  int top=14;
+  int bot=0;
+
+  while()
+  if(n<A[p])
+  {
+    
+      
+  }
+  
+
+  
+  return 0;
+}
