@@ -1,0 +1,73 @@
+#include <stdio.h>
+#include <limits.h>
+
+#define MAX 100
+
+// 함수 선언
+void optimalBST(int keys[], float freq[], int n);
+void printOptimalBST(int root[MAX][MAX], int i, int j, int n);
+
+int main() {
+    int keys[] = {10, 12, 20}; // 키 값
+    float freq[] = {0.34, 0.08, 0.58}; // 각 키의 검색 확률
+    int n = sizeof(keys) / sizeof(keys[0]);
+
+    optimalBST(keys, freq, n);
+    return 0;
+}
+
+// 최적 이분 검색 트리를 찾는 함수
+void optimalBST(int keys[], float freq[], int n) {
+    float cost[MAX][MAX]; // 최소 비용 저장
+    int root[MAX][MAX]; // 최적 루트 저장
+
+    for (int i = 0; i < n; i++) {
+        cost[i][i] = freq[i]; // 하나의 키만 있는 경우
+        root[i][i] = i;
+    }
+
+    for (int L = 2; L <= n; L++) { // 서브트리의 길이
+        for (int i = 0; i <= n - L; i++) {
+            int j = i + L - 1;
+            cost[i][j] = INT_MAX;
+
+            float sumFreq = 0;
+            for (int k = i; k <= j; k++) {
+                sumFreq += freq[k];
+            }
+
+            for (int r = i; r <= j; r++) {
+                float c = ((r > i) ? cost[i][r - 1] : 0) +
+                          ((r < j) ? cost[r + 1][j] : 0) +
+                          sumFreq;
+                if (c < cost[i][j]) {
+                    cost[i][j] = c;
+                    root[i][j] = r;
+                }
+            }
+        }
+    }
+
+    printf("최적 비용: %f\n", cost[0][n - 1]);
+    printf("최적 이분 검색 트리 구조:\n");
+    printOptimalBST(root, 0, n - 1, n);
+}
+
+// 최적 이분 검색 트리를 출력하는 함수
+void printOptimalBST(int root[MAX][MAX], int i, int j, int n) {
+    if (i > j) {
+        return;
+    }
+
+    if (i == j) {
+        printf("키 %d는 루트입니다.\n", i + 1);
+        return;
+    }
+
+    int r = root[i][j];
+    printf("키 %d는 루트입니다.\n", r + 1);
+    printf("왼쪽 서브트리: \n");
+    printOptimalBST(root, i, r - 1, n);
+    printf("오른쪽 서브트리: \n");
+    printOptimalBST(root, r + 1, j, n);
+}
