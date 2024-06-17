@@ -1,0 +1,21 @@
+#include <stdio.h>
+
+int main(void) {
+    int n1, n2;
+
+    // 두 수 입력받기
+    scanf("%d %d", &n1, &n2);
+
+    // 수를 거꾸로 읽기
+    int reversed_n1 = (n1 % 10) * 100 + ((n1 / 10) % 10) * 10 + n1 / 100;
+    int reversed_n2 = (n2 % 10) * 100 + ((n2 / 10) % 10) * 10 + n2 / 100;
+
+    // 큰 수 출력
+    if (reversed_n1 > reversed_n2) {
+        printf("%d\n", reversed_n1);
+    } else {
+        printf("%d\n", reversed_n2);
+    }
+
+    return 0;
+}
