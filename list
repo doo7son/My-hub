@@ -1,0 +1,60 @@
+#include <stdio.h>
+#include <stdlib.h>
+typedef int element;
+
+typedef struct 
+{
+  element data;
+  struct Node *link;
+}Node;
+
+Node *insert_first(Node *head, int data)
+{
+  Node *NEW=(Node*)malloc(sizeof(Node));
+  NEW->data=data;
+  NEW->link=head;
+  head= NEW;
+  return head;
+  
+}
+
+void print_list(Node *head)
+{
+  Node* cur=head;
+  for(cur; cur!=NULL; cur=cur->link)
+  {
+    printf("%d ", cur->data);
+      
+  }
+  printf("\n");
+  
+}
+Node *reverse(Node* head)
+{
+  Node *p,*q,*r;
+  p=head;
+  q=NULL;
+  while(p!=NULL)
+  {
+    r=q;
+    q=p;
+    p=p->link;
+    q->link=r;
+  }
+  return q;
+}
+int main()
+{
+  Node *head1=NULL;
+  head1=insert_first(head1,10);
+  head1=insert_first(head1,20);
+  head1=insert_first(head1,30);
+
+  
+  print_list(head1);
+  Node *head2=reverse(head1);
+  print_list(head2);
+  
+  return 0;
+
+}
